@@ -253,7 +253,7 @@ public class DbUtils {
 	}
 		return listOfemp;
 }
-	public static boolean getuserDetails(UserLoginForm form) {
+	public static boolean getuserDetails(String userName, String password) {
 		Connection conn=DbConnection.getConnection();
 		ResultSet rs=null;
 		boolean found=false;
@@ -261,8 +261,8 @@ public class DbUtils {
 			try {
 		        String sql = "SELECT * FROM userdetails WHERE userName = ? and password = ?";
 		        PreparedStatement statement = conn.prepareStatement(sql);
-		        statement.setString(1, form.getUserName());
-		        statement.setString(2, form.getPassword());
+		        statement.setString(1, userName);
+		        statement.setString(2, password);
 		 
 		         rs = statement.executeQuery();
 		 
