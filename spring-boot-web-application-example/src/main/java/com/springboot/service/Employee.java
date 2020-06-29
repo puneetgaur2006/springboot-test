@@ -1,6 +1,6 @@
 package com.springboot.service;
 
-public class EmployeeForm   {
+public class Employee{
 
 	
 	/**

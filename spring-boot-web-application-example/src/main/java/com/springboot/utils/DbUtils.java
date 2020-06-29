@@ -8,23 +8,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.springboot.service.EmployeeForm;
-import com.springboot.service.UserLoginForm;
+import com.springboot.service.Employee;
 
 public class DbUtils {
 
-	public static int saveEmployee(EmployeeForm addEmpForm) {
+	public static int saveEmployee(Employee addEmpForm) {
 		Connection conn=DbConnection.getConnection();
 		Statement  st=null;
 		ResultSet rs=null;
-		int generatedEmpId=-1;
+		int generatedEmpId=1;
 		if(conn!=null) {
 			try {
 				st=conn.createStatement();
 				String insertSql="insert into employee(EMP_NAME,Dept_Name,Email,Address,PhoneNo) "
 						+" values('" + addEmpForm.getName() + "','" + addEmpForm.getDept()+ "','" + addEmpForm.getEmail()+ "','" + addEmpForm.getAddress() + "','" + addEmpForm.getPhone() + "')";
 				System.out.println("query insert" +insertSql);
-				int m=st.executeUpdate(insertSql);
+				int m=st.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
 				System.out.println("Ok its working");
 				
 				if (m> 0) {
@@ -113,11 +112,11 @@ public class DbUtils {
 
 	
 	
-	public static EmployeeForm getEmployee(int employeeId) {
+	public static Employee getEmployee(int employeeId) {
 		Connection conn=DbConnection.getConnection();
 		Statement  st=null;
 		ResultSet rs=null;
-		EmployeeForm ef=new EmployeeForm();
+		Employee ef=new Employee();
 		int generatedEmpId=-1;
 		if(conn!=null) {
 			try {
@@ -157,7 +156,7 @@ public class DbUtils {
 
 }
 
-	public static boolean updateEmployee(EmployeeForm updatedEmpForm) {
+	public static boolean updateEmployee(Employee updatedEmpForm) {
 		Connection conn=DbConnection.getConnection();
 		Statement  st=null;
 		ResultSet rs=null;
@@ -165,8 +164,12 @@ public class DbUtils {
 		if(conn!=null) {
 			try {
 				st=conn.createStatement();
+				String sql="Select EMP_ID from employee where EMP_NAME='"+updatedEmpForm.getName()+"'";
+				ResultSet rsId = st.executeQuery(sql);
+				rsId.next();//only one
+				int empId = Integer.parseInt(rsId.getString("EMP_ID"));
 				String updateSql="update employee"
-						+" set EMP_NAME='" + updatedEmpForm.getName() + "',"+"EMAIL='"+updatedEmpForm.getEmail()+ "',"+"ADDRESS='"+updatedEmpForm.getAddress()+ "',"+"PHONENO="+updatedEmpForm.getPhone()+" where emp_id="+updatedEmpForm.getId();
+						+" set EMP_NAME='" + updatedEmpForm.getName() + "',"+"EMAIL='"+updatedEmpForm.getEmail()+ "',"+"ADDRESS='"+updatedEmpForm.getAddress()+ "',"+"PHONENO="+updatedEmpForm.getPhone()+" where emp_id="+empId;
 				
 				System.out.println(updateSql);
 				
@@ -199,21 +202,20 @@ public class DbUtils {
 		return false;
 
 }
-	public static List<EmployeeForm> getALLEmployee() {
+	public static List<Employee> getALLEmployee() {
 		Connection conn=DbConnection.getConnection();
 		Statement  st=null;
 		ResultSet rs=null;
 	
-		List<EmployeeForm> listOfemp=new ArrayList<EmployeeForm>();
+		List<Employee> listOfemp=new ArrayList<Employee>();
 		if(conn!=null) {
 			try {
 				st=conn.createStatement();
 				String Sql="Select EMP_ID,EMP_NAME,DEPT_NAME,Address,Email,PhoneNo from employee";
 				rs = st.executeQuery(Sql);
 				while (rs.next()) {
-					EmployeeForm ef=new EmployeeForm();
-					int employeeId=Integer.parseInt(rs.getString("EMP_ID"));
-					String id=String.valueOf(employeeId);
+					Employee ef=new Employee();
+					String id=String.valueOf(rs.getString("EMP_ID"));
 					String name = rs.getString("EMP_NAME");
 					String dept = rs.getString("DEPT_NAME");
 					String address = rs.getString("Address");
