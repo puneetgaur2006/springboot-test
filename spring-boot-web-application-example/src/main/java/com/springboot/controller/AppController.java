@@ -99,12 +99,11 @@ public class AppController {
 		List<String> deptList = dashBoardService.getAllDept();
 		model.addAttribute("employeeList", employees);
 		model.addAttribute("deptList", deptList);
-		return "employeeUpdatedDashboard";
+		return "dashboard";
 	}
 	
-	@GetMapping("/deleteEmployee")
-	public String deleteEmployee(@RequestParam(name = "hidden", required=false) String empId, Model model, HttpServletRequest request) {
-		String empId1 = (String)request.getAttribute("hidden");
+	@PostMapping("/deleteEmployee")
+	public String deleteEmployee(@RequestParam(name = "empId", required=false) String empId, Model model, HttpServletRequest request) {
 		boolean deletedSuccessfully = dashBoardService.deleteEmployee(empId);
 		model.addAttribute("employeeDeleted", deletedSuccessfully);
 		return "deleteSuccess";
