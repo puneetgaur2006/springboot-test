@@ -44,8 +44,7 @@
 		
 		function deletefun(val){
 			 //alert(document.forms[0].action);
-			 document.forms[0].action="/deleteEmployee?empId="+val;
-			 //alert(document.forms[0].action);
+			 document.forms[2].action="/deleteEmployee?empId="+val;
 			document.getElementById("deleteId").click();
 			}
 		function editfun(empid,name,dept,email,address,phone){
@@ -247,7 +246,7 @@
 	 <div id="deleteEmployeeModal1" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="/deleteEmployee" method="GET">
+				<form action="/deleteEmployee" method="post">
 					<div class="modal-header">
 						<h4 class="modal-title">Delete Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
