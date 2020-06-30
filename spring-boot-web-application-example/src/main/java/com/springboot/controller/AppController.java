@@ -1,5 +1,6 @@
 package com.springboot.controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,21 +78,35 @@ public class AppController {
 
 	@PostMapping("/updateEmployee")
 	public String updateEmployee(@RequestParam("name") String name, @RequestParam("email") String email,
-			@RequestParam("address") String address, @RequestParam("phone") String phone, Model model) {
+			@RequestParam("address") String address, @RequestParam("phone") String phone, Model model) throws SQLException {
 
 		Employee employee = new Employee();
 		employee.setAddress(address);
 		employee.setEmail(email);
 		employee.setName(name);
 		employee.setPhone(phone);
-
+		
 		boolean updatedSuccessfully = dashBoardService.updateEmployee(employee);
 		model.addAttribute("updateRecord", updatedSuccessfully);
 		return "updateEmpSuccess";
 	}
-
-	@PostMapping("redirectDashboard")
-	public String redirectDashboard() {
-		return "dashboard";
+	
+	
+	@PostMapping("/redirectDashboard")
+	public String redirectDashboard(Model model) {
+		
+		List<Employee> employees = dashBoardService.getAllEmployees();
+		List<String> deptList = dashBoardService.getAllDept();
+		model.addAttribute("employeeList", employees);
+		model.addAttribute("deptList", deptList);
+		return "employeeUpdatedDashboard";
+	}
+	
+	@GetMapping("/deleteEmployee")
+	public String deleteEmployee(@RequestParam(name = "hidden", required=false) String empId, Model model, HttpServletRequest request) {
+		String empId1 = (String)request.getAttribute("hidden");
+		boolean deletedSuccessfully = dashBoardService.deleteEmployee(empId);
+		model.addAttribute("employeeDeleted", deletedSuccessfully);
+		return "deleteSuccess";
 	}
 }

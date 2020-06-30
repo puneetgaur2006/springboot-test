@@ -156,7 +156,8 @@ public class DbUtils {
 
 }
 
-	public static boolean updateEmployee(Employee updatedEmpForm) {
+	@SuppressWarnings("resource")
+	public static boolean updateEmployee(Employee updatedEmpForm) throws SQLException {
 		Connection conn=DbConnection.getConnection();
 		Statement  st=null;
 		ResultSet rs=null;
@@ -164,10 +165,13 @@ public class DbUtils {
 		if(conn!=null) {
 			try {
 				st=conn.createStatement();
-				String sql="Select EMP_ID from employee where EMP_NAME='"+updatedEmpForm.getName()+"'";
+				String sql="Select EMP_ID from employee where PhoneNo='"+updatedEmpForm.getPhone()+"'";
 				ResultSet rsId = st.executeQuery(sql);
-				rsId.next();//only one
-				int empId = Integer.parseInt(rsId.getString("EMP_ID"));
+				int empId=0; 
+				rsId.next();
+				empId = Integer.parseInt(rsId.getString("EMP_ID"));
+				
+				
 				String updateSql="update employee"
 						+" set EMP_NAME='" + updatedEmpForm.getName() + "',"+"EMAIL='"+updatedEmpForm.getEmail()+ "',"+"ADDRESS='"+updatedEmpForm.getAddress()+ "',"+"PHONENO="+updatedEmpForm.getPhone()+" where emp_id="+empId;
 				
@@ -179,7 +183,29 @@ public class DbUtils {
 				
 			}
 			catch(SQLException se) {
-				se.printStackTrace();
+				System.out.println(se.getSQLState());
+				if("S1000".equals(se.getSQLState())) {
+					st=conn.createStatement();
+					String sql="Select EMP_ID from employee where EMP_NAME='"+updatedEmpForm.getName()+"'"
+							+ " and " + "Address = '"+updatedEmpForm.getAddress()+"'";
+					ResultSet rsId = st.executeQuery(sql);
+					
+					int empId=0; 
+					rsId.next();
+					empId = Integer.parseInt(rsId.getString("EMP_ID"));
+					
+					
+					String updateSql="update employee"
+							+" set EMP_NAME='" + updatedEmpForm.getName() + "',"+"EMAIL='"+updatedEmpForm.getEmail()+ "',"+"ADDRESS='"+updatedEmpForm.getAddress()+ "',"+"PHONENO="+updatedEmpForm.getPhone()+" where emp_id="+empId;
+					
+					System.out.println(updateSql);
+					
+					if (st.executeUpdate(updateSql) > 0) {
+						return true;
+					}
+				}
+				
+
 			}
 			finally {
 				try {
