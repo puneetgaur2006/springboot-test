@@ -9,7 +9,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/resources/css/main.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 <!--===============================================================================================-->
 </head>
 <body>
@@ -25,12 +25,12 @@
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
 						<span class="label-input100"></span>
-						<input id="userName" type="text" name="userName" property="userName" placeholder="Type your username">
+						<input class="userLoginForm" id="userName" type="text" name="userName" property="userName" placeholder="Type your username">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100"></span>
-						<input type="password" name="password" placeholder="Type your password">
+						<input class="userLoginForm" type="password" name="password" placeholder="Type your password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
 					

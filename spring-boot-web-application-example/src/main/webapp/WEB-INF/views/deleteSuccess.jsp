@@ -58,7 +58,7 @@
 <div id="showDeleteSuccessfull" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="/redirectDashboard" method="post">
+			<form action="redirectDashboard" method="post">
 				<div class="modal-body">					
 					<p>Record is deleted successfully !</p>
 				</div>

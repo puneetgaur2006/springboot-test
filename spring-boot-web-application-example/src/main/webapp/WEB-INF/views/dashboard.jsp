@@ -44,7 +44,7 @@
 		
 		function deletefun(val){
 			 //alert(document.forms[0].action);
-			 document.forms[2].action="/deleteEmployee?empId="+val;
+			 document.forms[2].action="deleteEmployee?empId="+val;
 			document.getElementById("deleteId").click();
 			}
 		function editfun(empid,name,dept,email,address,phone){
@@ -120,9 +120,6 @@
 							onclick="deletefun('${employee.id}')">Delete</button>
 						<a href="#deleteEmployeeModal1" class="delete" data-toggle="modal" id="deleteId"></a>
 					</td>
-					<td>
-					<input type="hidden" name="hidden" value="${employee.id}"/>
-					</td>
 				</tr>
 
 			</c:forEach>
@@ -135,7 +132,7 @@
 	<div id="addEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="/addEmployee" method="post">
+				<form action="addEmployee" method="post">
 					<div class="modal-header">
 						<h4 class="modal-title">Add Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
@@ -193,7 +190,7 @@
 	<div id="editEmployeeModal" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="/updateEmployee" method="post">
+				<form action="updateEmployee" method="post">
 					<div class="modal-header">
 						<h4 class="modal-title">Edit Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
@@ -246,7 +243,7 @@
 	 <div id="deleteEmployeeModal1" class="modal fade">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="/deleteEmployee" method="post">
+				<form action="deleteEmployee" method="post">
 					<div class="modal-header">
 						<h4 class="modal-title">Delete Employee</h4>
 						<button type="button" class="close" data-dismiss="modal"
