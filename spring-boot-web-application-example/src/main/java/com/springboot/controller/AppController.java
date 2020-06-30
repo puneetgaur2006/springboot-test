@@ -28,22 +28,14 @@ public class AppController {
 	DashBoardService dashBoardService;
 
 	@RequestMapping("/")
-	public String login() {
-		return "index";
+	public String login(Model model) {
+		 return "index";
 	}
 
 	@PostMapping("/dashboardservice")
 	public String validateUser(@RequestParam(name = "userName", required = false) String name,
 			@RequestParam(name = "password", required = false) String password, Model model, HttpServletRequest request) {
 
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		if (name==null && password==null) {
-			List<Employee> employees = dashBoardService.getAllEmployees();
-			List<String> deptList = dashBoardService.getAllDept();
-			model.addAttribute("employeeList", employees);
-			model.addAttribute("deptList", deptList);
-			return "dashboard";
-		} else {
 			boolean userValid = userLoginService.checkUserLoginDetails(name, password);
 			if (userValid) {
 				List<Employee> employees = dashBoardService.getAllEmployees();
@@ -55,7 +47,6 @@ public class AppController {
 
 			return "unauthorized";
 		}
-	}
 
 	@PostMapping("/addEmployee")
 	public String addEmployee(@RequestParam("name") String name, @RequestParam("dept") String department,

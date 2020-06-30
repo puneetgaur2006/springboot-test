@@ -16,7 +16,7 @@
 	
 	<html:javascript/>
 	<div class="limiter">
-		<div class="container-login100" style="background-image: url('/resources/images/bg-01.jpg');">
+		<div class="container-login100" style="background-image: url('resources/images/bg-01.jpg');">
 			<div class="wrap-login100 logindiv">
 				<form action="dashboardservice" method="post">
 					<span class="login100-form-title p-b-49">
@@ -24,12 +24,12 @@
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
-						<span class="label-input100"></span>
+						<span class="label-input100">User Name</span>
 						<input class="userLoginForm" id="userName" type="text" name="userName" property="userName" placeholder="Type your username">
 						<span class="focus-input100" data-symbol="&#xf206;"></span>
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
-						<span class="label-input100"></span>
+						<span class="label-input100">User Password</span>
 						<input class="userLoginForm" type="password" name="password" placeholder="Type your password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
