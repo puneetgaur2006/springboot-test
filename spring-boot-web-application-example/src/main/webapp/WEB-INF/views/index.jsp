@@ -37,7 +37,7 @@
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Password is required">
 						<span class="label-input100">User Password</span>
-						<div><small><form:errors path="userName" cssClass="errormsg" /></small></div>
+						<div><small><form:errors path="password" cssClass="errormsg"/></small></div>
 						<input class="userLoginForm" type="password" name="password" placeholder="Type your password">
 						<span class="focus-input100" data-symbol="&#xf190;"></span>
 					</div>
